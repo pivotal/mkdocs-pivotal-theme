@@ -10,7 +10,7 @@ with open("requirements.txt") as data:
 
 # Package description
 setup(
-    name = "pivotal mkdocs theme",
+    name = "mkdocs-pivotal-theme",
     version = "0.0.0",
     license = "MIT",
     author = "JT Archie",
