@@ -1,0 +1,9 @@
+extends: mkdocs-material
+logo: https://docs.pivotal.io/images/icon-p-green.jpg
+favicon: https://docs.pivotal.io/images/favicon.ico
+font:
+  code: Ubuntu Mono
+  text: Source Sans Pro
+palette:
+  accent: teal
+  primary: teal
