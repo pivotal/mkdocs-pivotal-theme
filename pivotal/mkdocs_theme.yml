@@ -1,4 +1,4 @@
-extends: mkdocs-material
+extends: material
 logo: https://docs.pivotal.io/images/icon-p-green.jpg
 favicon: https://docs.pivotal.io/images/favicon.ico
 font:
