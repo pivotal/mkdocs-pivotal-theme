@@ -1,11 +1,23 @@
-# Usage
+# Getting Started
 
-In your `requirements.txt` file, add the line `git+https://github.com/jtarchie/mkdocs-pivotal-theme#egg=mkdocs-pivotal`
+1. Start a new mkdocs site
 
-Then run `pip install -r requirements.txt`.
+   ```bash
+   mkdocs new my-docs
+   cd my-docs
+   ```
 
-In your `mkdocs.yml` file, change the `theme` key to be `theme: pivotal`.
+2. Add the theme to the `requirements.txt`
 
-Use `mkdocs serve` to preview changes.
+   ```
+   git+https://github.com/jtarchie/mkdocs-pivotal-theme#egg=mkdocs-pivotal
+   mkdocs-material
+   ```
 
-You'll now have the docs theme.
+3. Set the theme in the `mkdocs.yml`
+
+   ```yaml
+   theme: pivotal
+   ```
+
+4. Enjoy with `mkdocs serve`.
