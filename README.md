@@ -10,7 +10,7 @@
 2. Add the theme to the `requirements.txt`
 
    ```
-   git+https://github.com/jtarchie/mkdocs-pivotal-theme#egg=mkdocs-pivotal
+   git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal
    mkdocs-material
    ```
 
