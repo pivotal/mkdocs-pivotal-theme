@@ -1,3 +1,14 @@
+# Introduction
+
+This is the Pivotal theme for `mkdocs`.
+It allows the docs branding to be pulled in without having any HTML/CSS/JS in your content repo.
+
+This uses the `mkdocs-material` theme as a base theme.
+The design has been optimized for information architecture, navigation, and viewing across devices.
+
+The intention is as updates are pushed all content repos get them following the build commands.
+These build commands can be used for a local preview or on the web.
+
 # Getting Started
 
 1. Start a new mkdocs site
@@ -5,19 +16,33 @@
    ```bash
    mkdocs new my-docs
    cd my-docs
+   git init
+   git add -A
+   git ci -m 'my new docs site'
    ```
 
-2. Add the theme to the `requirements.txt`
+1. Add the theme to the `requirements.txt`
 
    ```
    git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal
    mkdocs-material
    ```
 
-3. Set the theme in the `mkdocs.yml`
+1. Set the theme in the `mkdocs.yml`
 
    ```yaml
    theme: pivotal
    ```
 
-4. Enjoy with `mkdocs serve`.
+1. Commit the changes.
+
+   ```bash
+   git add requirements.txt
+   git ci -m 'add the pivotal theme'
+   ```
+
+1. Enjoy locally with `mkdocs serve`.
+
+# Contribution
+
+Please create a Github issue for discussion before making a pull request.
