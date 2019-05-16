@@ -11,14 +11,14 @@ RSpec.describe 'When generating a site' do
       system("mkdocs new #{site_name}")
     end
     path = File.join(build_dir, site_name)
-    File.write(File.join(path, 'requirements.txt'), "mkdocs\nffi")
+    File.write(File.join(path, 'requirements.txt'), 'mkdocs')
     path
   end
 
   context 'and a single version is provided' do
     let(:build_dir) { Dir.mktmpdir }
     let(:output_dir) { Dir.mktmpdir }
-    let!(:doc_path) { create_mkdocs_site version: 'v1.1' }
+    let!(:doc_path) { create_mkdocs_site prefix: 'project', version: 'v1.1' }
 
     def build_the_site!
       BuildDocs.new(
@@ -29,10 +29,11 @@ RSpec.describe 'When generating a site' do
       ).generate!
     end
 
-    it 'does not include versions in the mkdocs.yml' do
+    it 'does not include versions in the mkdocs.yml and is strict' do
       build_the_site!
       config = YAML.load_file(File.join(doc_path, 'mkdocs.yml'))
-      expect(config['versions']).to eq({})
+      expect(config['extra']['versions']).to eq({})
+      expect(config['strict']).to be_truthy
     end
 
     it 'includes ensures the pivotal theme is used in requirements.txt' do
@@ -57,6 +58,12 @@ RSpec.describe 'When generating a site' do
         expect(requirements).to include 'mkdocs-material'
         expect(requirements).to include 'mkdocs'
       end
+    end
+
+    it 'copies the generated doc site to the output dir' do
+      build_the_site!
+      versioned_site = File.join(output_dir, 'some-path', 'v1.1', 'index.html')
+      expect(File).to exist(versioned_site)
     end
   end
 
