@@ -1,6 +1,7 @@
 # Introduction
 
 These are utility concourse scripts and tasks.
+It is on purpose that there is no _pipeline as a product_. Ask @jtarchie for philosical reasons.
 
 * `Dockerfile` contains the tools needed to run these tasks, scripts, and `mkdocs`. *UNRELEASED*
 * `build-docs` script will build a versioned docs site based on the inputs that are passed into it.
