@@ -2,7 +2,10 @@
 
 require 'spec_helper'
 require 'tmpdir'
+require 'tempfile'
 require 'yaml'
+require 'net/http'
+require 'uri'
 
 RSpec.describe 'When generating a site' do
   def create_mkdocs_site(prefix: 'project', version:)
@@ -13,6 +16,38 @@ RSpec.describe 'When generating a site' do
     path = File.join(build_dir, site_name)
     File.write(File.join(path, 'requirements.txt'), 'mkdocs')
     path
+  end
+
+  def start_nginx!(conf_path)
+    nginx_conf = Tempfile.new
+    File.write(nginx_conf.path, <<~CONF)
+    daemon on;
+    events {
+      worker_connections  4096;  ## Default: 1024
+    }
+    http{
+      server {
+        listen 8000;
+        root #{output_dir};
+
+        #{File.read(conf_path)}
+      }
+    }
+    CONF
+
+    end_nginx!
+    system("nginx -c #{nginx_conf.path}")
+  end
+
+  def end_nginx!
+    system('kill -9 $(lsof -t -i :8000)')
+  end
+  
+  def get(path)
+    request = Net::HTTP.get_response(URI("http://127.0.0.1:8000#{path}"))
+    puts request.inspect
+    puts request.to_hash
+    return request
   end
 
   context 'and a single version is provided' do
@@ -65,8 +100,22 @@ RSpec.describe 'When generating a site' do
       versioned_site = File.join(output_dir, 'some-path', 'v1.1', 'index.html')
       expect(File).to exist(versioned_site)
     end
+
+    it 'creates an nginx.conf that handles all the redirects' do
+      build_the_site!
+
+      nginx_conf = File.join(output_dir, 'nginx', 'conf', 'redirect.conf')
+      start_nginx!(nginx_conf)
+      expect(get('/some-path/v1.1/').code).to eq '200'
+      expect(get('/some-path/1-1/')['location']).to include '/some-path/v1.1'
+      expect(get('/some-path/')['location']).to include '/some-path/v1.1'
+      end_nginx!
+    end
+
+    xit 'creates a manifest.yml for a `cf push`' do
+    end
   end
 
-  context 'and multiple versions are provided' do
+  xcontext 'and multiple versions are provided' do
   end
 end

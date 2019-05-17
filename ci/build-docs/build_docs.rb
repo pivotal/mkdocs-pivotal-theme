@@ -15,9 +15,33 @@ class BuildDocs
     update_mkdocs_config
     update_python_requirements
     generate_sites
+    generate_nginx
   end
 
   private
+
+  def generate_nginx
+    location_conf = File.join(@output_dir, 'nginx', 'conf', 'redirect.conf')
+    FileUtils.mkdir_p(File.dirname(location_conf))
+    old_style_redirects = versions.map do |version|
+      old_style_version = version.gsub('.','-').gsub(/^v/, '')
+      if old_style_version != version
+        "rewrite ^/#{@site_prefix}/#{old_style_version}/(.*) /#{@site_prefix}/#{version}/$1 redirect;"
+      end
+    end.compact
+    latest_version = versions.last
+
+    File.write(location_conf, <<~CONF)
+    #{old_style_redirects.join("\n")}
+    rewrite ^/#{@site_prefix}/?$ /#{@site_prefix}/#{latest_version}/ redirect;
+    CONF
+  end
+
+  def versions
+    @versions ||= Dir[File.join(@docs_dir, '*')].map do |doc_dir|
+      doc_dir.split('/').last.gsub(/^#{@docs_prefix}-/, '')
+    end
+  end
 
   def generate_sites
     Dir[File.join(@docs_dir, '*')].each do |doc_dir|
