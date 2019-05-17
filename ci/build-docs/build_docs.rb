@@ -48,7 +48,7 @@ class BuildDocs
         "rewrite ^/#{@site_prefix}/#{old_style_version}/(.*) /#{@site_prefix}/#{version}/$1 redirect;"
       end
     end.compact
-    latest_version = versions.last
+    latest_version = versions.first
 
     File.write(location_conf, <<~CONF)
       #{old_style_redirects.join("\n")}
@@ -57,7 +57,7 @@ class BuildDocs
   end
 
   def versions
-    @versions ||= Dir[File.join(@docs_dir, '*')].map do |doc_dir|
+    @versions ||= Dir[File.join(@docs_dir, '*')].sort.reverse.map do |doc_dir|
       doc_dir.split('/').last.gsub(/^#{@docs_prefix}-/, '')
     end
   end
@@ -79,10 +79,17 @@ class BuildDocs
   end
 
   def update_mkdocs_config
-    Dir[File.join(@docs_dir, '*', 'mkdocs.yml')].each do |config_path|
+    Dir[File.join(@docs_dir, '*')].each do |doc_dir|
+      config_path = File.join(doc_dir, 'mkdocs.yml')
+      current_version = doc_dir.split('/').last.gsub(/^#{@docs_prefix}-/, '')
       config = YAML.load_file(config_path)
       config['theme'] = 'pivotal'
-      config['extra'] = { 'versions' => {} } # NOTE: https://www.mkdocs.org/user-guide/custom-themes/#extra-context
+      config['extra'] = {
+        'versions' => versions.map do |version|
+          [version, "/#{@site_prefix}/#{version}"]
+        end.to_h,
+        'current_version' => current_version
+      } # NOTE: https://www.mkdocs.org/user-guide/custom-themes/#extra-context
       config['strict'] = true
       File.write(config_path, config.to_yaml)
     end

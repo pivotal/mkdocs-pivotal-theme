@@ -68,6 +68,7 @@ RSpec.describe 'When generating a site' do
       build_the_site!
       config = YAML.load_file(File.join(doc_path, 'mkdocs.yml'))
       expect(config['extra']['versions']).to eq({})
+      expect(config['extra']['current_version']).to be_nil
       expect(config['strict']).to be_truthy
     end
 
@@ -112,7 +113,7 @@ RSpec.describe 'When generating a site' do
       end_nginx!
     end
 
-    fit 'creates a manifest.yml for a `cf push`' do
+    it 'creates a manifest.yml for a `cf push`' do
       build_the_site!
 
       manifest = YAML.load_file(File.join(output_dir, 'manifest.yml'))
@@ -126,6 +127,44 @@ RSpec.describe 'When generating a site' do
     end
   end
 
-  xcontext 'and multiple versions are provided' do
+  context 'and multiple versions are provided' do
+    let(:build_dir) { Dir.mktmpdir }
+    let(:output_dir) { Dir.mktmpdir }
+
+    def build_the_site!
+      BuildDocs.new(
+        docs_dir: build_dir,
+        docs_prefix: 'project',
+        site_prefix: 'some-path',
+        output_dir: output_dir,
+        domains: ['http://example.com']
+      ).generate!
+    end
+
+    fit 'includes multiple versions' do
+      create_mkdocs_site prefix: 'project', version: 'v1.1'
+      create_mkdocs_site prefix: 'project', version: 'v2.1'
+      create_mkdocs_site prefix: 'project', version: 'develop'
+
+      build_the_site!
+      nginx_conf = File.join(output_dir, 'nginx', 'conf', 'redirect.conf')
+      start_nginx!(nginx_conf)
+      %w[v1.1 v2.1 develop].each do |version|
+        config = YAML.load_file(File.join(build_dir, "project-#{version}", 'mkdocs.yml'))
+        expect(config['extra']['versions']).to eq(
+          'v2.1' => '/some-path/v2.1',
+          'v1.1' => '/some-path/v1.1',
+          'develop' => '/some-path/develop'
+        )
+        expect(config['extra']['current_version']).to eq version
+
+        versioned_site = File.join(output_dir, 'some-path', version, 'index.html')
+        expect(File).to exist(versioned_site)
+        expect(get("/some-path/#{version}/").code).to eq '200'
+      end
+
+      expect(get('/some-path/')['location']).to include '/some-path/v2.1'
+      end_nginx!
+    end
   end
 end
