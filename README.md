@@ -54,10 +54,10 @@ The `requirements.txt` (in the `mkdocs` site) needs to be updated to reference t
 
 ```
 #git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal
-git+file:///Users/pivotal/workspace/mkdocs-pivotal-theme#egg=mkdocs-pivotal
+/Users/pivotal/workspace/mkdocs-pivotal-theme#egg=mkdocs-pivotal
 ```
 
-Make your changes to the local copy. *AND `git commit` them*.
+Make your changes to the local copy.
 In your `mkdocs` site, run `pip3 uninstall -y mkdocs-pivotal && pip3 install -U -requirements`.
 Then `mkdocs serve` your site to see your changes.
 
