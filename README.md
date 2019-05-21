@@ -52,13 +52,19 @@ Please create a Github issue for discussion before making a pull request.
 Local development requires this theme to be used in an `mkdocs` (either new or existing) site.
 The `requirements.txt` (in the `mkdocs` site) needs to be updated to reference the local copy.
 
-```
-#git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal
-/Users/pivotal/workspace/mkdocs-pivotal-theme#egg=mkdocs-pivotal
-```
+First, make sure that `mkdocs-pivotal-theme` is uninstalled,
+by running `pip uninstall -r requirements.txt` to uninstall everything.
 
-Make your changes to the local copy.
-In your `mkdocs` site, run `pip3 uninstall -y mkdocs-pivotal && pip3 install -U -requirements`.
-Then `mkdocs serve` your site to see your changes.
+Now that you're working from a clean state,
+comment out `git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal` 
+in the `requirements.txt` of your docs repo (not the `mkdocs-pivotal-theme`).
 
-If there is an easier workflow, please create a Github issue to explain, please.
+Then, run `pip install --editable /path/to/mkdocs-pivotal-theme/`
+to install a local, editable copy.
+Any changes to the theme will be automatically rendered in your `mkdocs` server,
+without having to restart the server or reinstall any packages.
+
+After completing development into `mkdocs-pivotal-theme`
+after all changes are pushed,
+uncomment `git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal`
+and run `pip install --force-reinstall -r requirements.txt`
