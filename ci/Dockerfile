@@ -14,7 +14,9 @@ RUN apt-get install -y \
   python3-wheel \
   ruby2.6 \
   ruby2.6-dev \
-  golang-go
+  golang-go \
+  git \
+  wget
 RUN wget -O - https://github.com/BurntSushi/ripgrep/releases/download/0.10.0/ripgrep-0.10.0-x86_64-unknown-linux-musl.tar.gz | tar zxf - --strip-component=1
 RUN mv rg /usr/local/bin/
 RUN go get -u github.com/raviqqe/muffet
