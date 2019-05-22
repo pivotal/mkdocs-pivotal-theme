@@ -1,6 +1,7 @@
-FROM golang
+FROM ubuntu
 
 RUN apt-add-repository ppa:brightbox/ruby-ng
+RUN add-apt-repository ppa:gophers/archive
 RUN apt-get update --fix-missing
 RUN apt-get install -y \
   python3 \
@@ -10,7 +11,8 @@ RUN apt-get install -y \
   python3-setuptools \
   python3-wheel \
   ruby2.6 \
-  ruby2.6-dev
+  ruby2.6-dev \
+  golang-1.12-go
 RUN wget -O - https://github.com/BurntSushi/ripgrep/releases/download/0.10.0/ripgrep-0.10.0-x86_64-unknown-linux-musl.tar.gz | tar zxf - --strip-component=1
 RUN mv rg /usr/local/bin/
 RUN go get -u github.com/raviqqe/muffet
