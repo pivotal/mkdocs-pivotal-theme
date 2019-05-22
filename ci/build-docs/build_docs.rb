@@ -82,6 +82,8 @@ class BuildDocs
   def update_mkdocs_config
     Dir[File.join(@docs_dir, '*')].each do |doc_dir|
       config_path = File.join(doc_dir, 'mkdocs.yml')
+      next unless File.exist?(config_path)
+      
       current_version = doc_dir.split('/').last.gsub(/^#{@docs_prefix}-/, '')
       config = YAML.load_file(config_path)
       config['theme'] = 'pivotal'
