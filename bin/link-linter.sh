@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+host_repo=$1
+url=$2
+whitelist=$3
+
+exit_status=0
+
+# how to use
+if [ -z $host_repo ]; then
+  echo -e '\033[1;32mThank you for using link-linter!\033[0m'
+  echo -e 'To use, please provide:
+   - a source repo,
+   - a url where your docs site is running,
+   - an optional whitelist to exclude certain links from causing errors.'
+  echo 'Example: ./bin/link-linter.sh docs-for-product http://127.0.0.1:8000 https://google.com'
+  exit 1
+fi
+
+# missing required URL
+if [ -z "$url" ]; then
+  echo -e '\033[1;31mURL is required for running the linter\033[0m'
+  echo -e '\033[1;31mPlease provide a URL and run again\033[0m'
+  exit 1
+fi
+
+if [ -z "$whitelist" ]; then
+  echo -e '\033[1;32mrunning muffet without a whitelist...\033[0m'
+  muffet "$url"
+  if [[ $? -ne 0 ]]; then
+    echo -e '\033[1;31mmuffet returned with errors.\033[0m'
+    exit_status=1
+  fi
+else
+  echo -e '\033[1;32mrunning muffet with a regex whitelist...\033[0m'
+  muffet --exclude "$whitelist" "$url"
+  if [[ $? -ne 0 ]]; then
+    echo -e '\033[1;31mmuffet returned with errors!\033[0m'
+    exit_status=1
+  fi
+fi
+
+allHtmlLines() {
+  for htmlFile in $(find site/ -type f -name '*.html'); do
+    local i=0
+    while IFS= read -r line; do
+      ((i++))
+      echo "$htmlFile:$i $line"
+    done < "$htmlFile"
+  done
+}
+
+pushd $host_repo
+    echo -e '\n\033[1;32mRunning a check for undefined links...\033[0m'
+    brokenLinkLines=$(allHtmlLines | grep -e '\[.*\]\[.*\]')
+
+    if [ ! -z "$brokenLinkLines" ]; then
+      echo "$brokenLinkLines"
+      echo -e '\033[1;31mGenerated HTML contains undefined links!\033[0m'
+      exit_status=1
+    fi
+popd
+
+if [[ "$exit_status" -ne 0 ]]; then
+  echo -e '\033[1;31mlink-linter returned with errors!\033[0m'
+  echo -e '\033[1;31mPlease fix in the corresponding ".md" and rerun "mkdocs build"\033[0m'
+else
+  echo -e '\n\033[1;32mNo errors found in documentation links! \033[0m'
+fi
+
+exit "$exit_status"
