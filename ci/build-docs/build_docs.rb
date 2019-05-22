@@ -109,33 +109,33 @@ class BuildDocs
   end
 end
 
-if __FILE__ == $0
-    require 'optparse'
-    options = {}
-    OptionParser.new do |opts|
-        opts.banner = "Usage: ./build_docs.rb [options]"
-        opts.on("--output-dir=DIR") do |v|
-            options[:output_dir] = v
-        end
-        opts.on("--docs-dir=DIR") do |v|
-            options[:docs_dir] = v
-        end
-        opts.on("--docs-prefix=PREFIX") do |v|
-            options[:docs_prefix] = v
-        end
-        opts.on("--site-prefix=PREFIX") do |v|
-            options[:site_prefix] = v
-        end
-        opts.on("--domains=DOMAINS") do |v|
-            options[:domains] = v
-        end
+if $PROGRAM_NAME == __FILE__
+  require 'optparse'
+  options = {}
+  OptionParser.new do |opts|
+    opts.banner = 'Usage: ./build_docs.rb [options]'
+    opts.on('--output-dir=DIR') do |v|
+      options[:output_dir] = v
     end
-    # running as a binary (`ruby ./build_docs.rb`)
-    BuildDocs.new(
-        docs_dir: options[:docs_dir],
-        docs_prefix: options[:docs_prefix],
-        site_prefix: options[:site_prefix],
-        output_dir: options[:output_dir],
-        domains: options[:domain],
-    ).generate!
+    opts.on('--docs-dir=DIR') do |v|
+      options[:docs_dir] = v
+    end
+    opts.on('--docs-prefix=PREFIX') do |v|
+      options[:docs_prefix] = v
+    end
+    opts.on('--site-prefix=PREFIX') do |v|
+      options[:site_prefix] = v
+    end
+    opts.on('--domains=DOMAINS') do |v|
+      options[:domains] = v
+    end
+  end.parse!
+  # running as a binary (`ruby ./build_docs.rb`)
+  BuildDocs.new(
+    docs_dir: options[:docs_dir],
+    docs_prefix: options[:docs_prefix],
+    site_prefix: options[:site_prefix],
+    output_dir: options[:output_dir],
+    domains: options[:domain]
+  ).generate!
 end
