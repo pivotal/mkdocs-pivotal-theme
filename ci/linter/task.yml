@@ -1,0 +1,12 @@
+---
+image_resource:
+  type: docker-image
+  source:
+    repository: internalpcfplatformautomation/docs
+platform: linux
+inputs:
+  - name: site
+  - name: mkdocs-pivotal-theme
+run:
+  path: mkdocs-pivotal-theme/ci/linter/link-linter.sh
+  args: ["./site", "((site_url))", "((white_list))"]

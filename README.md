@@ -74,19 +74,4 @@ after all changes are pushed,
 uncomment `git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal`
 and run `pip install --force-reinstall -r requirements.txt`
 
-# Link Linting
-
-Checking the validity of your links can be done using CI, 
-or directly from the command line.
-
-To use, please provide:
-
-   - a source repo,
-   - a url where your docs site is running,
-   - an optional whitelist to exclude certain links from causing errors.
-   
-Example: `./ci/linter/link-linter.sh path-to-local-docs-repo http://127.0.0.1:8000 https://google.com`
-
-**NOTE**: Links defined by single brackets are not checked by this tool.
-      Please use either `[title][link]` or `[title](link)` to guarantee the linter will check it.
 

@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-host_repo=$1
+build_source=$1
 url=$2
 whitelist=$3
 
 exit_status=0
 
 # how to use
-if [ -z $host_repo ]; then
+if [ -z $build_source ]; then
   echo -e '\033[1;32mThank you for using link-linter!\033[0m'
   echo -e 'To use, please provide:
-   - a source repo,
+   - a built mkdocs site,
    - a url where your docs site is running,
    - an optional whitelist to exclude certain links from causing errors.'
   echo 'Example: ./ci/linter/link-linter.sh docs-for-product http://127.0.0.1:8000 https://google.com'
@@ -43,7 +43,7 @@ else
 fi
 
 allHtmlLines() {
-  for htmlFile in $(find site/ -type f -name '*.html'); do
+  for htmlFile in $(find . -type f -name '*.html'); do
     local i=0
     while IFS= read -r line; do
       ((i++))
@@ -52,7 +52,7 @@ allHtmlLines() {
   done
 }
 
-pushd $host_repo
+pushd $build_source
     echo -e '\n\033[1;32mRunning a check for undefined reference-style links...\033[0m'
     brokenLinkLines=$(allHtmlLines | grep -e '\[.*\]\[.*\]')
 
