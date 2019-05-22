@@ -132,10 +132,10 @@ if $PROGRAM_NAME == __FILE__
   end.parse!
   # running as a binary (`ruby ./build_docs.rb`)
   BuildDocs.new(
-    docs_dir: options[:docs_dir],
+    docs_dir: File.expand_path(options[:docs_dir]),
     docs_prefix: options[:docs_prefix],
     site_prefix: options[:site_prefix],
-    output_dir: options[:output_dir],
+    output_dir: File.expand_path(options[:output_dir]),
     domains: options[:domain]
   ).generate!
 end
