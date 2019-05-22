@@ -1,5 +1,7 @@
 FROM ubuntu
 
+RUN apt-get update --fix-missing
+RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:brightbox/ruby-ng
 RUN add-apt-repository ppa:gophers/archive
 RUN apt-get update --fix-missing
