@@ -7,7 +7,7 @@ whitelist=$3
 exit_status=0
 
 # how to use
-if [ -z $build_source ]; then
+if [ -z "$build_source" ]; then
   echo -e '\033[1;32mThank you for using link-linter!\033[0m'
   echo -e 'To use, please provide:
    - a built mkdocs site,
@@ -52,7 +52,7 @@ allHtmlLines() {
   done
 }
 
-pushd $build_source
+pushd "$build_source"
     echo -e '\n\033[1;32mRunning a check for undefined reference-style links...\033[0m'
     brokenLinkLines=$(allHtmlLines | grep -e '\[.*\]\[.*\]')
 
