@@ -1,6 +1,6 @@
 FROM ubuntu
 
-RUN apt-add-repository ppa:brightbox/ruby-ng
+RUN add-apt-repository ppa:brightbox/ruby-ng
 RUN add-apt-repository ppa:gophers/archive
 RUN apt-get update --fix-missing
 RUN apt-get install -y \
