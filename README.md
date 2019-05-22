@@ -45,12 +45,14 @@ These build commands can be used for a local preview or on the web.
 
 # Contribution
 
-Please create a Github issue for discussion before making a pull request.
+Please create a Github issue for discussion 
+before making a pull request.
 
 ## Local Development
 
-Local development requires this theme to be used in an `mkdocs` (either new or existing) site.
-The `requirements.txt` (in the `mkdocs` site) needs to be updated to reference the local copy.
+Local development requires this theme 
+to be used in an `mkdocs` (either new or existing) site.
+`requirements.txt` (in the `mkdocs` site) needs to be updated to reference the local copy.
 
 First, make sure that `mkdocs-pivotal-theme` is uninstalled,
 by running `pip uninstall -r requirements.txt` to uninstall everything.
@@ -68,3 +70,20 @@ After completing development into `mkdocs-pivotal-theme`
 after all changes are pushed,
 uncomment `git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal`
 and run `pip install --force-reinstall -r requirements.txt`
+
+# Link Linting
+
+Checking the validity of your links can be done using CI, 
+or directly from the command line.
+
+To use, please provide:
+
+   - a source repo,
+   - a url where your docs site is running,
+   - an optional whitelist to exclude certain links from causing errors.
+   
+Example: `./ci/linter/link-linter.sh path-to-local-docs-repo http://127.0.0.1:8000 https://google.com`
+
+**NOTE**: Links defined by single brackets are not checked by this tool.
+      Please use either `[title][link]` or `[title](link)` to guarantee the linter will check it.
+

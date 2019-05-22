@@ -13,7 +13,7 @@ if [ -z $host_repo ]; then
    - a source repo,
    - a url where your docs site is running,
    - an optional whitelist to exclude certain links from causing errors.'
-  echo 'Example: ./bin/link-linter.sh docs-for-product http://127.0.0.1:8000 https://google.com'
+  echo 'Example: ./ci/linter/link-linter.sh docs-for-product http://127.0.0.1:8000 https://google.com'
   echo -e '\033[1;93mNOTE: Links defined by single brackets are not checked by this tool.
       Please use either [title][link] or [title](link) to guarantee the linter will check it.\033[0m'
   exit 1
