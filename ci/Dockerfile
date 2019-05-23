@@ -22,4 +22,5 @@ RUN apt-get install -y \
   wget
 RUN wget -O - https://github.com/BurntSushi/ripgrep/releases/download/0.10.0/ripgrep-0.10.0-x86_64-unknown-linux-musl.tar.gz | tar zxf - --strip-component=1
 RUN mv rg /usr/local/bin/
+ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 RUN go get -u github.com/raviqqe/muffet
