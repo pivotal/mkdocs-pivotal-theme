@@ -111,6 +111,7 @@ RSpec.describe 'When generating a site' do
       expect(get('/some-path/v1.1/').code).to eq '200'
       expect(get('/some-path/1-1/')['location']).to include '/some-path/v1.1'
       expect(get('/some-path/')['location']).to include '/some-path/v1.1'
+      expect(get('/some-path/v1.1/does-not-exist.html').code).to eq '404'
       end_nginx!
     end
 
@@ -130,7 +131,7 @@ RSpec.describe 'When generating a site' do
       expect(staticfile).to eq ({
         'location_include' => 'redirect.conf',
         'status_codes' => {
-          '404' => 'some-path/v1.1/404.html'
+          '404' => '/some-path/v1.1/404.html'
         }
       })
     end
@@ -209,9 +210,11 @@ RSpec.describe 'When generating a site' do
         versioned_site = File.join(output_dir, 'some-path', version, 'index.html')
         expect(File).to exist(versioned_site)
         expect(get("/some-path/#{version}/").code).to eq '200'
+        expect(get("/some-path/#{version}/does-not-exist.html").code).to eq '404'
       end
 
       expect(get('/some-path/')['location']).to include '/some-path/v2.1'
+      expect(get('/some-path/does-not-exist.html').code).to eq '404'
       end_nginx!
     end
   end

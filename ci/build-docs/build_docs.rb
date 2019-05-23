@@ -59,7 +59,7 @@ class BuildDocs
     File.write(File.join(@output_dir, 'Staticfile'), {
       'location_include' => 'redirect.conf',
       'status_codes' => {
-        '404' => "#{@site_prefix}/#{latest_version}/404.html"
+        '404' => "/#{@site_prefix}/#{latest_version}/404.html"
       }
     }.to_yaml)
   end
