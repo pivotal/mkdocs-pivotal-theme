@@ -92,6 +92,7 @@ class BuildDocs
       current_version = doc_dir.split('/').last.gsub(/^#{@docs_prefix}-/, '')
       config = YAML.load_file(config_path)
       config['theme'] = 'pivotal'
+      config['site_url'] = "http://#{@domains.first}/#{@site_prefix}/#{current_version}"
       config['extra'] = {
         'versions' => versions.map do |version|
           [version, "/#{@site_prefix}/#{version}"]

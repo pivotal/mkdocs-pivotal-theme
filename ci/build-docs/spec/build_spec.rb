@@ -60,7 +60,7 @@ RSpec.describe 'When generating a site' do
         docs_prefix: 'project',
         site_prefix: 'some-path',
         output_dir: output_dir,
-        domains: ['http://example.com']
+        domains: ['example.com']
       ).generate!
     end
 
@@ -70,6 +70,7 @@ RSpec.describe 'When generating a site' do
       expect(config['extra']['versions']).to eq('v1.1' => '/some-path/v1.1')
       expect(config['extra']['current_version']).to eq 'v1.1'
       expect(config['strict']).to be_truthy
+      expect(config['site_url']).to eq 'http://example.com/some-path/v1.1'
     end
 
     it 'includes ensures the pivotal theme is used in requirements.txt' do
@@ -121,7 +122,7 @@ RSpec.describe 'When generating a site' do
         'memory' => '64M',
         'disk_quota' => '256M',
         'routes' => [
-          { 'route' => 'http://example.com/some-path' }
+          { 'route' => 'example.com/some-path' }
         ]
       )
 
