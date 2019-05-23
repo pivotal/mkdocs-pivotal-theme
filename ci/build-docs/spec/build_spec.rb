@@ -124,6 +124,14 @@ RSpec.describe 'When generating a site' do
           { 'route' => 'http://example.com/some-path' }
         ]
       )
+
+      staticfile = YAML.load_file(File.join(output_dir, 'Staticfile'))
+      expect(staticfile).to eq ({
+        'location_include' => 'redirect.conf',
+        'status_codes' => {
+          '404' => 'some-path/v1.1/404.html'
+        }
+      })
     end
 
     context 'when the jinja2 plugin is specified' do

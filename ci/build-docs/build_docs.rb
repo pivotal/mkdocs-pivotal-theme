@@ -55,10 +55,16 @@ class BuildDocs
       #{old_style_redirects.join("\n")}
       rewrite ^/#{@site_prefix}/?$ /#{@site_prefix}/#{latest_version}/ redirect;
     CONF
+
+    File.write(File.join(@output_dir, 'Staticfile'), {
+      'location_include' => 'redirect.conf',
+      'status_codes' => {
+        '404' => "#{@site_prefix}/#{latest_version}/404.html"
+      }
+    }.to_yaml)
   end
 
   def versions
-    puts Dir[File.join(@docs_dir, "#{@docs_prefix}-*")].inspect
     @versions ||= Dir[File.join(@docs_dir, "#{@docs_prefix}-*")].sort.reverse.map do |doc_dir|
       doc_dir.split('/').last.gsub(/^#{@docs_prefix}-/, '')
     end
