@@ -137,6 +137,6 @@ if $PROGRAM_NAME == __FILE__
     docs_prefix: options[:docs_prefix],
     site_prefix: options[:site_prefix],
     output_dir: File.expand_path(options[:output_dir]),
-    domains: options[:domain]
+    domains: options[:domains].split(' ')
   ).generate!
 end
