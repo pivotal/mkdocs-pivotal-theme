@@ -67,8 +67,8 @@ RSpec.describe 'When generating a site' do
     it 'does not include versions in the mkdocs.yml and is strict' do
       build_the_site!
       config = YAML.load_file(File.join(doc_path, 'mkdocs.yml'))
-      expect(config['extra']['versions']).to eq({"v1.1"=>"/some-path/v1.1"})
-      expect(config['extra']['current_version']).to eq "v1.1"
+      expect(config['extra']['versions']).to eq('v1.1' => '/some-path/v1.1')
+      expect(config['extra']['current_version']).to eq 'v1.1'
       expect(config['strict']).to be_truthy
     end
 
