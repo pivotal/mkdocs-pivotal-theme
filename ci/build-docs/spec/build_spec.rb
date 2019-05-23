@@ -125,6 +125,45 @@ RSpec.describe 'When generating a site' do
         ]
       )
     end
+
+    context 'when the jinja2 plugin is specified' do
+      let(:dependenct_section_dir) { File.join(build_dir, 'some-directory-v1.1') }
+
+      before do
+        FileUtils.mkdir_p(dependenct_section_dir)
+        config = YAML.load_file(File.join(doc_path, 'mkdocs.yml'))
+        config['plugins'] = [
+          {
+            'jinja2' => {
+              'dependent_sections' => {
+                'task' => '../some-directory',
+                'examples' => './docs/examples'
+              }
+            }
+          }
+        ]
+        File.write(File.join(doc_path, 'mkdocs.yml'), config.to_yaml)
+        File.write(
+          File.join(doc_path, 'requirements.txt'),
+          File.read(File.join(doc_path, 'requirements.txt')) + "\ngit+https://github.com/pivotal/mkdocs-plugins.git#egg=mkdocs-jinja2&subdirectory=mkdocs-jinja2"
+        )
+        build_the_site!
+      end
+
+      it 'updates the directories to point to their versioned counterparts' do
+        config = YAML.load_file(File.join(doc_path, 'mkdocs.yml'))
+        expect(config['plugins'].first).to eq (
+          {
+            'jinja2' => {
+              'dependent_sections' => {
+                'task' => dependenct_section_dir,
+                'examples' => './docs/examples'
+              }
+            }
+          }
+        )
+      end
+    end
   end
 
   context 'and multiple versions are provided' do

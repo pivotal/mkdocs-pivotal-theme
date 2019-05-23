@@ -93,6 +93,17 @@ class BuildDocs
         'current_version' => current_version
       } # NOTE: https://www.mkdocs.org/user-guide/custom-themes/#extra-context
       config['strict'] = true
+      if config.key?('plugins')
+        if index = config['plugins'].index { |v| v.key?('jinja2') }
+          config['plugins'][index]['jinja2']['dependent_sections'].each do |name, current_dir|
+            current_dir_name = File.basename(File.expand_path(current_dir))
+            dir = File.join(@docs_dir, "#{current_dir_name}-#{current_version}")
+            if Dir.exist?(dir)
+              config['plugins'][index]['jinja2']['dependent_sections'][name] = dir
+            end
+          end
+        end
+      end
       File.write(config_path, config.to_yaml)
     end
   end
