@@ -102,11 +102,13 @@ class BuildDocs
       config['strict'] = true
       if config.key?('plugins')
         if index = config['plugins'].index { |v| v.key?('jinja2') }
-          config['plugins'][index]['jinja2']['dependent_sections'].each do |name, current_dir|
-            current_dir_name = File.basename(File.expand_path(current_dir))
-            dir = File.join(@docs_dir, "#{current_dir_name}-#{current_version}")
-            if Dir.exist?(dir)
-              config['plugins'][index]['jinja2']['dependent_sections'][name] = dir
+          if config['plugins'][index]['jinja2'].key?('dependent_sections')
+            config['plugins'][index]['jinja2']['dependent_sections'].each do |name, current_dir|
+              current_dir_name = File.basename(File.expand_path(current_dir))
+              dir = File.join(@docs_dir, "#{current_dir_name}-#{current_version}")
+              if Dir.exist?(dir)
+                config['plugins'][index]['jinja2']['dependent_sections'][name] = dir
+              end
             end
           end
         end
