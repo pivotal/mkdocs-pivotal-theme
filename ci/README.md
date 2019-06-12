@@ -45,7 +45,7 @@ It is on purpose that there is no _pipeline as a product_. Ask @jtarchie for phi
         config:
           image_resource:
             type: docker-image
-            source: { repository: NOT-YET-CREATED }
+            source: { repository: internalpcfplatformautomation/docs }
           inputs:
           - name: docs-v1.1
           - name: docs-v1.2
