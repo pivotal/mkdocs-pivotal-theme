@@ -129,6 +129,8 @@ RSpec.describe 'When generating a site' do
 
       staticfile = YAML.load_file(File.join(output_dir, 'Staticfile'))
       expect(staticfile).to eq ({
+        'force_https' => true,
+        'http_strict_transport_security' => true,
         'location_include' => 'redirect.conf',
         'status_codes' => {
           '404' => '/some-path/v1.1/404.html'

@@ -57,6 +57,8 @@ class BuildDocs
     CONF
 
     File.write(File.join(@output_dir, 'Staticfile'), {
+      'http_strict_transport_security' => true,
+      'force_https' => true,
       'location_include' => 'redirect.conf',
       'status_codes' => {
         '404' => "/#{@site_prefix}/#{latest_version}/404.html"
