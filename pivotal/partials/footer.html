@@ -1,5 +1,11 @@
 {%- import "partials/language.html" as lang with context -%}
 
+<style>
+    .footer-not-link {
+        color: hsla(0,0%,100%,.7);
+    }
+</style>
+
 <!-- Application footer -->
 <footer class="md-footer">
 
@@ -61,19 +67,21 @@
 
             <!-- Copyright and theme information -->
             <div class="md-footer-copyright">
-                <a href="https://pivotal.io/privacy-policy">
+                <a href="https://pivotal.io/privacy-policy" target="_blank">
                     Privacy Policy
                 </a>
                 |
-                <a href="https://pivotal.io/legal/">
+                <a href="https://pivotal.io/legal/" target="_blank">
                     Terms of Use
+                </a>
+                |
+                <a href="https://pivotal.io" target="_blank">
+                    Pivotal
                 </a>
             </div>
 
-            <div class="md-footer-social">
-                <a href="https://pivotal.io">
+            <div class="md-footer-social footer-not-link">
                     Pivotal Documentation © 2019 Pivotal Software, Inc. All Rights Reserved
-                </a>
             </div>
 
         </div>

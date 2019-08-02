@@ -1,4 +1,133 @@
+<style>
+  .header-dropdown {
+    font-size: .75em;
+  }
+
+  .header-dropdown .content {
+    top: 97%;
+  }
+
+  .header-dropdown .content,
+  [data-md-color-primary=teal] .md-header, [data-md-color-primary=teal] .md-hero {
+    background-color: #00b5a3;
+  }
+
+  [data-md-color-primary=teal] .md-typeset a {
+    color: #00b5a3;
+  }
+
+  [data-md-color-primary=teal] .md-nav__link--active, [data-md-color-primary=teal] .md-nav__link:active {
+    color: #00A390;
+  }
+
+  body, input {
+    color: #00253e;
+  }
+
+  @media only screen and (max-width: 60em) {
+    .md-header .secondary-header {
+      display: none;
+    }
+  }
+  @media only screen and (min-width: 60em) {
+    .md-header {
+      height: 6.8rem;
+    }
+
+    .md-header .md-header-nav {
+      height: 4rem;
+    }
+
+    .md-header .md-header-nav .md-flex {
+      height: 100%;
+    }
+
+    .md-header .md-header-nav .md-flex__cell {
+      vertical-align: middle;
+    }
+
+    .md-header .md-header-nav .md-header-nav__title {
+      font-size: 1.25rem;
+      line-height: 4rem;
+    }
+
+    .md-header .secondary-header .md-flex__cell {
+      width: 30rem;
+      text-align: right;
+    }
+
+    .md-header .secondary-header .md-grid {
+      padding: 0 .6rem;
+    }
+
+    .md-header .secondary-header .logo {
+      text-align: left;
+    }
+
+    .md-header .secondary-header {
+      height: 2.4rem;
+      background-color: white;
+      line-height: 2.1rem;
+    }
+
+    .md-header .secondary-header .sub {
+      font-size: 13px;
+    }
+
+    .md-header .secondary-header .sub a {
+      margin: 0 0 0 25px;
+      color: #00253e;
+      font-size: 16px;
+    }
+
+    .md-header .secondary-header .sub a:hover {
+      color: #00A390;
+    }
+
+    .md-search {
+      padding-top: 0;
+    }
+
+        .md-header[data-md-state=shadow] {
+            box-shadow: none;
+        }
+
+        .global-header-title .pivotal-logo {
+            fill: white;
+            height: .9rem;
+            margin: 13px 0 0;
+        }
+
+        .global-header-title .documentation-letters {
+            fill: white;
+            height: .6rem;
+        }
+
+        .md-sidebar[data-md-state=lock] {
+            top: 7.4rem;
+        }
+
+        .md-main__inner {
+            padding-top: 5rem;
+        }
+    }
+</style>
 <header class="md-header" data-md-component="header">
+  <div class="secondary-header">
+      <div class="md-flex md-grid">
+          <div class="md-flex__cell logo">
+              <a href="https://docs.pivotal.io" class="global-header-title">
+                  <img class='pivotal-logo' src="https://d1fto35gcfffzn.cloudfront.net/images/docs/logo-docs.svg"/>
+              </a></div>
+
+          <div class="md-flex__cell sub">
+              <a href="#">Support</a>
+              <a href="#">Downloads</a>
+              <a href="#">Contact Us</a>
+              <a href="#">Sign In</a>
+          </div>
+      </div>
+  </div>
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
@@ -6,7 +135,7 @@
           {% if config.theme.logo.icon %}
             <i class="md-icon">{{ config.theme.logo.icon }}</i>
           {% else %}
-            <img src="{{ config.theme.logo | url }}" width="24" height="24">
+            <img src="{{ config.theme.logo | url }}" width="65" height="65">
           {% endif %}
         </a>
       </div>
