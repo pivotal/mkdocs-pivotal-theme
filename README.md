@@ -55,7 +55,7 @@ to be used in an `mkdocs` (either new or existing) site.
 `requirements.txt` (in the `mkdocs` site) needs to be updated to reference the local copy.
 
 First, make sure that `mkdocs-pivotal-theme` is uninstalled,
-by running `pip uninstall -r requirements.txt` to uninstall everything.
+by running `pip3 uninstall -r requirements.txt` to uninstall everything.
 
 Now that you're working from a clean state,
 comment out `git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal` 
@@ -63,6 +63,7 @@ in the `requirements.txt` of your docs repo (not the `mkdocs-pivotal-theme`).
 
 Add `/Users/pivotal/workspace/mkdocs-pivotal-theme` (or the path to where this repo is checked out)
 to the `requirements.txt` of your docs repo.
+Then `pip3 install -r requirements.txt`.
 
 Then, run `pip3 install --editable /path/to/mkdocs-pivotal-theme/`
 to install a local, editable copy.
@@ -72,6 +73,6 @@ without having to restart the server or reinstall any packages.
 After completing development into `mkdocs-pivotal-theme`
 after all changes are pushed,
 uncomment `git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal`
-and run `pip install --force-reinstall -r requirements.txt`
+and run `pip3 install --force-reinstall -r requirements.txt`
 
 
