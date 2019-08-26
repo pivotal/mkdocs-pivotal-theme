@@ -155,7 +155,7 @@ if $PROGRAM_NAME == __FILE__
       options[:domains] = v
     end
     opts.on('--exclude-from-dropdown=VERSIONS') do |v|
-      options[:domains] = v
+      options[:exclude_from_dropdown] = v
     end
   end.parse!
   # running as a binary (`ruby ./build_docs.rb`)
