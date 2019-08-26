@@ -136,7 +136,9 @@ end
 
 if $PROGRAM_NAME == __FILE__
   require 'optparse'
-  options = {}
+  options = {
+    exclude_from_dropdown: ''
+  }
   OptionParser.new do |opts|
     opts.banner = 'Usage: ./build_docs.rb [options]'
     opts.on('--output-dir=DIR') do |v|
