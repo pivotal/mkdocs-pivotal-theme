@@ -10,13 +10,15 @@ class BuildDocs
     docs_prefix:,
     site_prefix:,
     output_dir:,
-    domains:
+    domains:,
+    exclude_from_dropdown: []
   )
     @domains = domains
     @docs_dir = docs_dir
     @docs_prefix = docs_prefix
     @site_prefix = site_prefix
     @output_dir = output_dir
+    @exclude_from_dropdown = exclude_from_dropdown
   end
 
   def generate!
@@ -69,7 +71,7 @@ class BuildDocs
   def versions
     @versions ||= Dir[File.join(@docs_dir, "#{@docs_prefix}-*")].sort.reverse.map do |doc_dir|
       doc_dir.split('/').last.gsub(/^#{@docs_prefix}-/, '')
-    end
+    end - @exclude_from_dropdown
   end
 
   def generate_sites
@@ -152,6 +154,9 @@ if $PROGRAM_NAME == __FILE__
     opts.on('--domains=DOMAINS') do |v|
       options[:domains] = v
     end
+    opts.on('--exclude-from-dropdown=VERSIONS') do |v|
+      options[:domains] = v
+    end
   end.parse!
   # running as a binary (`ruby ./build_docs.rb`)
   BuildDocs.new(
@@ -159,6 +164,7 @@ if $PROGRAM_NAME == __FILE__
     docs_prefix: options[:docs_prefix],
     site_prefix: options[:site_prefix],
     output_dir: File.expand_path(options[:output_dir]),
-    domains: options[:domains].split(' ')
+    domains: options[:domains].split(' '),
+    exclude_from_dropdown: options[:exclude_from_dropdown].split(',')
   ).generate!
 end

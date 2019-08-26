@@ -217,13 +217,15 @@ RSpec.describe 'When generating a site' do
         docs_prefix: 'project',
         site_prefix: 'some-path',
         output_dir: output_dir,
-        domains: ['http://example.com']
+        domains: ['http://example.com'],
+        exclude_from_dropdown: ['v3.1']
       ).generate!
     end
 
     it 'includes multiple versions' do
       create_mkdocs_site prefix: 'project', version: 'v1.1'
       create_mkdocs_site prefix: 'project', version: 'v2.1'
+      create_mkdocs_site prefix: 'project', version: 'v3.1'
       create_mkdocs_site prefix: 'project', version: 'develop'
 
       build_the_site!
