@@ -53,11 +53,8 @@ class BuildDocs
     end.compact
     latest_version = versions.first
 
-    version_match = versions.join("($|\\/\.*)|").gsub("\.", "\\.")
-
     File.write(location_conf, <<~CONF)
       #{old_style_redirects.join("\n")}
-      rewrite ^/#{@site_prefix}/((?!#{version_match}).*) /#{@site_prefix}/#{latest_version}/$1 redirect;
       rewrite ^/#{@site_prefix}/?$ /#{@site_prefix}/#{latest_version}/ redirect;
     CONF
 
@@ -65,9 +62,6 @@ class BuildDocs
       'http_strict_transport_security' => true,
       'force_https' => true,
       'location_include' => 'redirect.conf',
-      'status_codes' => {
-        '404' => "/#{@site_prefix}/#{latest_version}/404.html"
-      }
     }.to_yaml)
   end
 
