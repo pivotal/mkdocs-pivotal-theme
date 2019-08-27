@@ -19,6 +19,10 @@ RSpec.describe 'When generating a site' do
   end
 
   def start_nginx!(conf_path)
+    if !system("nginx -v")
+        raise "nginx is not installed"
+    end
+
     nginx_conf = Tempfile.new
     File.write(nginx_conf.path, <<~CONF)
       daemon on;
@@ -111,6 +115,7 @@ RSpec.describe 'When generating a site' do
       expect(get('/some-path/v1.1/').code).to eq '200'
       expect(get('/some-path/1-1/')['location']).to include '/some-path/v1.1'
       expect(get('/some-path/')['location']).to include '/some-path/v1.1'
+      expect(get('/some-path/does-not-exist.html')['location']).to include '/some-path/v1.1/does-not-exist.html'
       expect(get('/some-path/v1.1/does-not-exist.html').code).to eq '404'
       end_nginx!
     end
@@ -247,7 +252,19 @@ RSpec.describe 'When generating a site' do
       end
 
       expect(get('/some-path/')['location']).to include '/some-path/v2.1'
-      expect(get('/some-path/does-not-exist.html').code).to eq '404'
+
+      # Does not redirect if the branch exists
+      expect(get('/some-path/v1.1')['location']).to include '/some-path/v1.1/'
+      expect(get('/some-path/v2.1')['location']).to include '/some-path/v2.1/'
+      expect(get('/some-path/v1.1/')['location']).to be nil
+      expect(get('/some-path/v2.1/')['location']).to be nil
+      expect(get('/some-path/v2.1/test')['location']).to be nil
+      expect(get('/some-path/v2.1/v2.1/test')['location']).to be nil
+
+      # Redirects if the branch doesn't exist
+      expect(get('/some-path/not-a-branch')['location']).to include '/some-path/v2.1/not-a-branch'
+      expect(get('/some-path/not-a-branch/test')['location']).to include '/some-path/v2.1/not-a-branch/test'
+
       end_nginx!
     end
   end

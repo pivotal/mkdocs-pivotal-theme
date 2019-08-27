@@ -53,8 +53,11 @@ class BuildDocs
     end.compact
     latest_version = versions.first
 
+    version_match = versions.join("($|\\/\.*)|").gsub("\.", "\\.")
+
     File.write(location_conf, <<~CONF)
       #{old_style_redirects.join("\n")}
+      rewrite ^/#{@site_prefix}/((?!#{version_match}).*) /#{@site_prefix}/#{latest_version}/$1 redirect;
       rewrite ^/#{@site_prefix}/?$ /#{@site_prefix}/#{latest_version}/ redirect;
     CONF
 
