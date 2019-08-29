@@ -62,6 +62,9 @@ class BuildDocs
       'http_strict_transport_security' => true,
       'force_https' => true,
       'location_include' => 'redirect.conf',
+      'status_codes' => {
+        '404' => "/#{@site_prefix}/#{latest_version}/404.html"
+      }
     }.to_yaml)
   end
 

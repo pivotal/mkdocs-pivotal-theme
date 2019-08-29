@@ -29,10 +29,16 @@ RSpec.describe 'When generating a site' do
         server {
           listen 8000;
           root #{output_dir};
+          error_page 404 /some-path/v1.1/404.html;
            #{File.read(conf_path)}
         }
       }
     CONF
+    # Note that the above test fixture
+    # is meant to emulate the behavior of the staticfile buildpack as configured
+    # by the Staticfile tested elsewhere in this package,
+    # especially in respect to the error_page behavior seen here:
+    # https://github.com/cloudfoundry/staticfile-buildpack/blob/0f975bce2949cefc1c5143e8fd234fb5ee778648/src/staticfile/finalize/data.go#L135
 
     end_nginx!
     system("nginx -c #{nginx_conf.path}")
@@ -62,6 +68,17 @@ RSpec.describe 'When generating a site' do
         output_dir: output_dir,
         domains: ['example.com']
       ).generate!
+    end
+
+    it 'handles 404s using the 404.html page' do
+      # See note with the nginx config above
+      # to understand the relative validity of this test.
+      build_the_site!
+      nginx_conf = File.join(output_dir, 'nginx', 'conf', 'redirect.conf')
+      puts "output_dir: #{output_dir}"
+      start_nginx!(nginx_conf)
+      expect(get('/some-path/asdf').code).to eq '404'
+      expect(get('/some-path/asdf').body).to include 'No topic matches'
     end
 
     it 'does not include versions in the mkdocs.yml and is strict' do
@@ -114,7 +131,7 @@ RSpec.describe 'When generating a site' do
       end_nginx!
     end
 
-    it 'creates a manifest.yml for a `cf push`' do
+    it 'creates a manifest.yml and staticfile for a `cf push`' do
       build_the_site!
 
       manifest = YAML.load_file(File.join(output_dir, 'manifest.yml'))
@@ -131,6 +148,7 @@ RSpec.describe 'When generating a site' do
         'force_https' => true,
         'http_strict_transport_security' => true,
         'location_include' => 'redirect.conf',
+        'status_codes' => { '404' => '/some-path/v1.1/404.html' }
       })
     end
 
