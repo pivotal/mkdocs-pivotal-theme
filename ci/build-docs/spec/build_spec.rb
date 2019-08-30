@@ -262,5 +262,12 @@ RSpec.describe 'When generating a site' do
       expect(get('/some-path/')['location']).to include '/some-path/v2.1'
       end_nginx!
     end
+
+    it 'maintains an identical copy of main.html for the 404 page to extend' do
+      pivotal_path = File.expand_path('../../../pivotal', __dir__)
+      main = File.join(pivotal_path, "main.html" )
+      main_copy = File.join(pivotal_path, "main-copy-404.html" )
+      expect(FileUtils.identical?(main, main_copy)).to eq true
+    end
   end
 end
