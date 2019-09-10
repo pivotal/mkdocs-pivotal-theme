@@ -1,0 +1,203 @@
+<style>
+    .header-dropdown {
+        font-size: .75em
+    }
+
+    .header-dropdown .content {
+        left: 0;
+        float: none;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175)
+    }
+
+    .header-dropdown .content, [data-md-color-primary=teal] .md-header, [data-md-color-primary=teal] .md-hero {
+        background-color: #00b5a3
+    }
+
+    [data-md-color-primary=teal] .md-typeset a {
+        color: #00b5a3
+    }
+
+    [data-md-color-primary=teal] .md-nav__link--active, [data-md-color-primary=teal] .md-nav__link:active {
+        color: #00A390
+    }
+
+    body, input {
+        color: #00253e
+    }
+
+    @media only screen and (max-width: 60em) {
+        .md-header .secondary-header {
+            display: none
+        }
+    }
+
+    @media only screen and (min-width: 60em) {
+        .md-header {
+            height: 6.8rem
+        }
+
+        .md-header .md-header-nav {
+            height: 4rem
+        }
+
+        .md-header .md-header-nav .md-flex {
+            height: 100%
+        }
+
+        .md-header .md-header-nav .md-flex__cell {
+            vertical-align: middle
+        }
+
+        .md-header .md-header-nav .md-header-nav__title {
+            font-size: 1.25rem;
+            line-height: 4rem
+        }
+
+        .md-header .secondary-header .md-flex__cell {
+            width: 30rem;
+            text-align: right
+        }
+
+        .md-header .secondary-header .md-grid {
+            padding: 0 .6rem
+        }
+
+        .md-header .secondary-header .logo {
+            text-align: left
+        }
+
+        .md-header .secondary-header {
+            height: 2.4rem;
+            background-color: #fff;
+            line-height: 2.1rem
+        }
+
+        .md-header .secondary-header .sub {
+            font-size: 13px
+        }
+
+        .md-header .secondary-header .sub a {
+            margin: 0 0 0 25px;
+            color: #00253e;
+            font-size: 16px
+        }
+
+        .md-header .secondary-header .sub a:hover {
+            color: #00A390
+        }
+
+        .md-search {
+            padding-top: 0
+        }
+
+        .md-header[data-md-state=shadow] {
+            box-shadow: none
+        }
+
+        .global-header-title .pivotal-logo {
+            height: .9rem;
+            margin: 13px 0 0
+        }
+
+        .global-header-title .documentation-letters {
+            height: .6rem
+        }
+
+        .md-sidebar[data-md-state=lock] {
+            top: 7.4rem
+        }
+
+        .md-main__inner {
+            padding-top: 5rem
+        }
+    }
+
+    .footer-not-link {
+        color: hsla(0, 0%, 100%, .7)
+    }
+
+    label.md-nav__link {
+        font-weight: 700
+    }
+
+    @media only screen and (min-width: 76.1875em) {
+        label.md-nav__title.md-nav__title--site {
+            display: none
+        }
+    }
+
+    .header-dropdown {
+        /*display: inline-block;*/
+        position: relative;
+        margin-left: 10px;
+        cursor: pointer
+    }
+
+    .header-dropdown:hover .content, .header-dropdown:hover .content:hover {
+        display: block;
+        visibility: visible;
+        opacity: 1
+    }
+
+    .header-dropdown .content {
+        position: absolute;
+        top: 100%;
+        background-color: #009688;
+        left: 0;
+        display: none;
+        z-index: 1;
+        clear: both;
+        padding: 0
+    }
+
+    .header-dropdown ul {
+        padding: 0;
+        margin: 0;
+        line-height: 24px
+    }
+
+    .header-dropdown ul li {
+        list-style: none;
+        padding: 5px
+    }
+
+    .header-dropdown ul li:hover {
+        background-color: rgba(0, 0, 0, 0.26)
+    }
+
+    .md-header-nav__topic {
+        overflow: visible
+    }
+
+    .header-dropdown .pointer {
+        height: 24px;
+        width: 24px;
+        display: inline-flex;
+        vertical-align: middle
+    }
+
+    .md-typeset pre, .md-typeset code {
+        font-size: 100%
+    }
+
+    .md-typeset table:not([class]) {
+        font-size: 16px
+    }
+
+    .md-typeset > .codehilitetable {
+        overflow: visible
+    }
+
+    .md-typeset .md-footer-social {
+        font-size: .64rem
+    }
+
+    .md-typeset [id]:target:before {
+        margin-top: -136px !important;
+        padding-top: 136px !important;
+    }
+
+    .md-footer-social {
+        padding: .4rem 0
+    }
+</style>
