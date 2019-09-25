@@ -1,4 +1,7 @@
 <style>
+    html {
+        scroll-behavior: smooth;
+    }	
     .header-dropdown {
         font-size: .75em
     }
@@ -120,6 +123,10 @@
         font-weight: 700
     }
 
+    label.md-nav__title {
+        margin: 10.5px 0 0 0;
+    }
+
     @media only screen and (min-width: 76.1875em) {
         label.md-nav__title.md-nav__title--site {
             display: none
@@ -192,10 +199,24 @@
     .md-typeset .md-footer-social {
         font-size: .64rem
     }
-
+    
     .md-typeset [id]:target:before {
-        margin-top: -136px !important;
-        padding-top: 136px !important;
+        margin-top: -205px !important;
+        padding-top: 205px !important;
+    }
+
+    @media only screen and (max-width: 125em) { 
+        .md-typeset [id]:target:before {
+            margin-top: -188px !important;
+            padding-top: 188px !important;
+        }
+    }
+    
+    @media only screen and (max-width: 100em) {
+        .md-typeset [id]:target:before {
+            margin-top: -170px !important;
+            padding-top: 170px !important;
+        }
     }
 
     .md-footer-social {
