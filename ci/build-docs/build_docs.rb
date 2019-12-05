@@ -3,7 +3,6 @@
 
 require 'yaml'
 require 'fileutils'
-require 'parallel'
 
 class BuildDocs
   def initialize(
@@ -76,7 +75,7 @@ class BuildDocs
   end
 
   def generate_sites
-    Parallel.each(Dir[File.join(@docs_dir, "#{@docs_prefix}-*")].to_a) do |doc_dir|
+    Dir[File.join(@docs_dir, "#{@docs_prefix}-*")].each do |doc_dir|
       version = doc_dir.split('/').last.gsub(/^#{@docs_prefix}-/, '')
       Dir.chdir(doc_dir) do
         system('pip3 install -U -r requirements.txt')
