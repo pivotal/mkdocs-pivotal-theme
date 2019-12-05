@@ -25,3 +25,4 @@ RUN mv rg /usr/local/bin/
 ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 RUN go get -u github.com/raviqqe/muffet
+RUN gem install parallel
