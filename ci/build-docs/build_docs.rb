@@ -34,6 +34,7 @@ class BuildDocs
   def generate_cf_manifest
     manifest = File.join(@output_dir, 'manifest.yml')
     File.write(manifest, {
+      'instances' => 2,
       'memory' => '64M',
       'disk_quota' => '256M',
       'routes' => @domains.map do |domain|

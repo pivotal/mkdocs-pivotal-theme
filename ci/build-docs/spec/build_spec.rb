@@ -136,6 +136,7 @@ RSpec.describe 'When generating a site' do
 
       manifest = YAML.load_file(File.join(output_dir, 'manifest.yml'))
       expect(manifest).to eq(
+        'instances' => 2,
         'memory' => '64M',
         'disk_quota' => '256M',
         'routes' => [
@@ -265,8 +266,8 @@ RSpec.describe 'When generating a site' do
 
     it 'maintains an identical copy of main.html for the 404 page to extend' do
       pivotal_path = File.expand_path('../../../pivotal', __dir__)
-      main = File.join(pivotal_path, "main.html" )
-      main_copy = File.join(pivotal_path, "main-copy-404.html" )
+      main = File.join(pivotal_path, 'main.html')
+      main_copy = File.join(pivotal_path, 'main-copy-404.html')
       expect(FileUtils.identical?(main, main_copy)).to eq true
     end
   end
