@@ -1,6 +1,6 @@
 extends: material
 logo: https://d1fto35gcfffzn.cloudfront.net/tanzu/tanzu-bug.svg
-favicon: https://docs.pivotal.io/images/favicon.ico
+favicon: https://d1fto35gcfffzn.cloudfront.net/tanzu/favicon.ico
 font:
   code: Ubuntu Mono
   text: Source Sans Pro
