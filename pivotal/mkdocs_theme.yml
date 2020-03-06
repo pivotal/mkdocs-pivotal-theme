@@ -1,5 +1,5 @@
 extends: material
-logo: https://docs.pivotal.io/images/icon-p-green.jpg
+logo: https://d1fto35gcfffzn.cloudfront.net/tanzu/tanzu-bug.svg
 favicon: https://docs.pivotal.io/images/favicon.ico
 font:
   code: Ubuntu Mono
