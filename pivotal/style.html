@@ -13,19 +13,27 @@
     }
 
     .header-dropdown .content, [data-md-color-primary=teal] .md-header, [data-md-color-primary=teal] .md-hero {
-        background-color: #00b5a3
+        background-color: #314351
     }
 
     [data-md-color-primary=teal] .md-typeset a {
-        color: #00b5a3
+        color: #2185c5;
+    }
+
+    [data-md-color-primary=teal] .md-typeset a:hover {
+        color: #1D428A;
     }
 
     [data-md-color-primary=teal] .md-nav__link--active, [data-md-color-primary=teal] .md-nav__link:active {
-        color: #00A390
+        color: #1D428A;
+    }
+
+    [data-md-color-primary=teal] .md-nav__link--active, [data-md-color-primary=teal] .md-nav__link:hover {
+        color: #1D428A;
     }
 
     body, input {
-        color: #00253e
+        color: #00253e;
     }
 
     @media only screen and (max-width: 60em) {
@@ -56,6 +64,10 @@
             line-height: 4rem
         }
 
+        .md-header-nav__button md-logo {
+            padding: 0;
+        }
+
         .md-header .secondary-header .md-flex__cell {
             width: 30rem;
             text-align: right
@@ -70,7 +82,7 @@
         }
 
         .md-header .secondary-header {
-            height: 2.4rem;
+            height: 2.8rem;
             background-color: #fff;
             line-height: 2.1rem
         }
@@ -86,7 +98,7 @@
         }
 
         .md-header .secondary-header .sub a:hover {
-            color: #00A390
+            color: #1D428A;
         }
 
         .md-search {
@@ -97,9 +109,10 @@
             box-shadow: none
         }
 
-        .global-header-title .pivotal-logo {
-            height: .9rem;
-            margin: 13px 0 0
+        .global-header-title .tanzu-logo {
+            height: 38px;
+            max-width: 233px;
+            margin: 8px 17px 10px 4px;
         }
 
         .global-header-title .documentation-letters {
@@ -149,7 +162,7 @@
     .header-dropdown .content {
         position: absolute;
         top: 100%;
-        background-color: #009688;
+        background-color: #314351;
         left: 0;
         display: none;
         z-index: 1;
@@ -192,6 +205,15 @@
         font-size: 16px
     }
 
+    .md-typeset table:not([class]) th{
+        background-color: #F8F8F8;
+        color: #00253e;
+    }
+
+    .md-typeset table:not([class]) tr{
+        color: #727272;
+    }
+
     .md-typeset > .codehilitetable {
         overflow: visible
     }
@@ -221,5 +243,15 @@
 
     .md-footer-social {
         padding: .4rem 0
+    }
+
+    .md-footer-nav {
+        background-color: #314351;
+        color: #fff;
+    }
+
+    .md-footer-meta {
+        background-color: #314351;
+        color: #fff;
     }
 </style>
