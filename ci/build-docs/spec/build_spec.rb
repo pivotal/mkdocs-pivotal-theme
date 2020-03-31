@@ -66,6 +66,7 @@ RSpec.describe 'When generating a site' do
         docs_prefix: 'project',
         site_prefix: 'some-path',
         output_dir: output_dir,
+        ignore_directories: [create_mkdocs_site(prefix: 'project', version: 'ignore-me')],
         domains: ['example.com']
       ).generate!
     end

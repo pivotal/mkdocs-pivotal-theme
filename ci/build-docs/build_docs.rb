@@ -3,6 +3,7 @@
 
 require 'yaml'
 require 'fileutils'
+require 'pathname'
 
 class BuildDocs
   def initialize(
@@ -11,6 +12,7 @@ class BuildDocs
     site_prefix:,
     output_dir:,
     domains:,
+    ignore_directories: [],
     exclude_from_dropdown: []
   )
     @domains = domains
@@ -18,6 +20,13 @@ class BuildDocs
     @docs_prefix = docs_prefix
     @site_prefix = site_prefix
     @output_dir = output_dir
+    @ignore_directories = ignore_directories.map do |path|
+      if Pathname.new(path).absolute?
+        path
+      else
+        File.join(@docs_dir, path)
+      end
+    end
     @exclude_from_dropdown = exclude_from_dropdown
   end
 
@@ -70,7 +79,7 @@ class BuildDocs
   end
 
   def docs_dirs
-    Dir[File.join(@docs_dir, "#{@docs_prefix}-*")]
+    Dir[File.join(@docs_dir, "#{@docs_prefix}-*")] - @ignore_directories
   end
 
   def versions
@@ -142,7 +151,8 @@ end
 if $PROGRAM_NAME == __FILE__
   require 'optparse'
   options = {
-    exclude_from_dropdown: ''
+    exclude_from_dropdown: '',
+    ignore_directories: ''
   }
   OptionParser.new do |opts|
     opts.banner = 'Usage: ./build_docs.rb [options]'
@@ -161,6 +171,9 @@ if $PROGRAM_NAME == __FILE__
     opts.on('--domains=DOMAINS') do |v|
       options[:domains] = v
     end
+    opts.on('--ignore-directories=DIRS') do |v|
+      options[:ignore_directories] = v
+    end
     opts.on('--exclude-from-dropdown=VERSIONS') do |v|
       options[:exclude_from_dropdown] = v
     end
@@ -172,6 +185,7 @@ if $PROGRAM_NAME == __FILE__
     site_prefix: options[:site_prefix],
     output_dir: File.expand_path(options[:output_dir]),
     domains: options[:domains].split(' '),
+    ignore_directories: options[:ignore_directories].split(','),
     exclude_from_dropdown: options[:exclude_from_dropdown].split(',')
   ).generate!
 end
