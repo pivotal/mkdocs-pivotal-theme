@@ -69,14 +69,18 @@ class BuildDocs
     }.to_yaml)
   end
 
+  def docs_dirs
+    Dir[File.join(@docs_dir, "#{@docs_prefix}-*")]
+  end
+
   def versions
-    @versions ||= Dir[File.join(@docs_dir, "#{@docs_prefix}-*")].sort.reverse.map do |doc_dir|
+    @versions ||= docs_dirs.sort.reverse.map do |doc_dir|
       doc_dir.split('/').last.gsub(/^#{@docs_prefix}-/, '')
     end - @exclude_from_dropdown
   end
 
   def generate_sites
-    Dir[File.join(@docs_dir, "#{@docs_prefix}-*")].each do |doc_dir|
+    docs_dirs.each do |doc_dir|
       version = doc_dir.split('/').last.gsub(/^#{@docs_prefix}-/, '')
       Dir.chdir(doc_dir) do
         system('pip3 install -U -r requirements.txt')
@@ -92,7 +96,7 @@ class BuildDocs
   end
 
   def update_mkdocs_config
-    Dir[File.join(@docs_dir, "#{@docs_prefix}-*")].each do |doc_dir|
+    docs_dirs.each do |doc_dir|
       config_path = File.join(doc_dir, 'mkdocs.yml')
       current_version = doc_dir.split('/').last.gsub(/^#{@docs_prefix}-/, '')
       config = YAML.load_file(config_path)
@@ -123,7 +127,7 @@ class BuildDocs
   end
 
   def update_python_requirements
-    Dir[File.join(@docs_dir, "#{@docs_prefix}-*")].each do |doc_dir|
+    docs_dirs.each do |doc_dir|
       requirements_path = File.join(doc_dir, 'requirements.txt')
       FileUtils.touch(requirements_path) unless File.exist?(requirements_path)
       packages = File.read(requirements_path).split("\n")
