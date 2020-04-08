@@ -32,7 +32,6 @@ class BuildDocs
 
   def generate!
     update_mkdocs_config
-    update_python_requirements
     generate_sites
     generate_nginx
     generate_cf_manifest
@@ -132,18 +131,6 @@ class BuildDocs
         end
       end
       File.write(config_path, config.to_yaml)
-    end
-  end
-
-  def update_python_requirements
-    docs_dirs.each do |doc_dir|
-      requirements_path = File.join(doc_dir, 'requirements.txt')
-      FileUtils.touch(requirements_path) unless File.exist?(requirements_path)
-      packages = File.read(requirements_path).split("\n")
-      %w[mkdocs mkdocs-material git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal].each do |package|
-        packages << package unless packages.include? package
-      end
-      File.write(requirements_path, packages.join("\n"))
     end
   end
 end
