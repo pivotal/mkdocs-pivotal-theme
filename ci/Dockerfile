@@ -5,7 +5,7 @@ ENV LANG=C.UTF-8
 
 RUN apt-get update --fix-missing
 RUN apt-get install -y software-properties-common
-RUN add-apt-repository ppa:brightbox/ruby-ng
+RUN apt-get install ruby-full
 RUN add-apt-repository ppa:longsleep/golang-backports
 RUN apt-get update --fix-missing
 RUN apt-get install -y \
