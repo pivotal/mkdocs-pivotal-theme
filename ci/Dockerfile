@@ -5,7 +5,6 @@ ENV LANG=C.UTF-8
 
 RUN apt-get update --fix-missing
 RUN apt-get install -y software-properties-common
-RUN apt-get install ruby-full
 RUN add-apt-repository ppa:longsleep/golang-backports
 RUN apt-get update --fix-missing
 RUN apt-get install -y \
@@ -15,6 +14,7 @@ RUN apt-get install -y \
   python3-pip \
   python3-setuptools \
   python3-wheel \
+  ruby-full \
   ruby2.6 \
   ruby2.6-dev \
   golang-go \
