@@ -28,14 +28,14 @@ fi
 
 if [ -z "$whitelist" ]; then
   echo -e '\033[1;32mrunning muffet without a whitelist...\033[0m'
-  muffet -t 30 "$url"
+  muffet -t 30 "$url" -c 50
   if [[ $? -ne 0 ]]; then
     echo -e '\033[1;31mmuffet returned with errors.\033[0m'
     exit_status=1
   fi
 else
   echo -e '\033[1;32mrunning muffet with a regex whitelist...\033[0m'
-  muffet -t 30 --exclude "$whitelist" "$url"
+  muffet -t 30 --exclude "$whitelist" "$url" -c 50
   if [[ $? -ne 0 ]]; then
     echo -e '\033[1;31mmuffet returned with errors!\033[0m'
     exit_status=1
