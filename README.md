@@ -11,6 +11,13 @@ These build commands can be used for a local preview or on the web.
 
 # Getting Started
 
+We've made some changes to the theme to work with MkDocs v5.0+.
+
+The changes reflected below:
+* lock the version mkdocs to range
+* redefining the `markdown_extensions` to the newer configuration,
+  for example, `pymdownx.highlight` is now handling `linenums`.
+
 1. Start a new mkdocs site
 
    ```bash
@@ -25,13 +32,22 @@ These build commands can be used for a local preview or on the web.
 
    ```
    git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal
-   mkdocs-material
+   mkdocs-material~=5.1
    ```
 
 1. Set the theme in the `mkdocs.yml`
 
    ```yaml
    theme: pivotal
+   markdown_extensions:
+   - sane_lists
+   - admonition
+   - pymdownx.extra
+   - pymdownx.snippets:
+       check_paths: true
+   - pymdownx.superfences
+   - pymdownx.highlight:
+       linenums: true
    ```
 
 1. Commit the changes.
