@@ -1,90 +1,79 @@
+<!-- Application header -->
 <header class="md-header" data-md-component="header">
-  <div class="secondary-header">
-      <div class="md-flex md-grid">
-          <div class="md-flex__cell logo">
-              <a href="https://docs.pivotal.io" class="global-header-title">
-                  <img class='tanzu-logo' src="https://d1fto35gcfffzn.cloudfront.net/images/docs/logo-tanzu-docs.svg"/>
-              </a></div>
+    <div class="top-header">
+        <div class="md-grid">
+            <div class="logo">
+                <a href="https://docs.pivotal.io" class="global-header-title">
+                    <img class='tanzu-logo' src="https://d1fto35gcfffzn.cloudfront.net/images/docs/logo-tanzu-docs.svg"/>
+                </a>
+            </div>
 
-          <div class="md-flex__cell sub">
-              <a href="https://pivotal.io/support" target="_blank">Support</a>
-              <a href="https://network.pivotal.io/" target="_blank">Downloads</a>
-              <a href="https://pivotal.io/contact" target="_blank">Contact Us</a>
-              <a href="https://login.run.pivotal.io/" target="_blank">Sign In</a>
-          </div>
-      </div>
-  </div>
-  <nav class="md-header-nav md-grid">
-    <div class="md-flex">
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="{{ config.site_url | default(nav.homepage.url, true) | url }}" title="{{ config.site_name }}" class="md-header-nav__button md-logo">
-          {% if config.theme.logo.icon %}
-            <i class="md-icon">{{ config.theme.logo.icon }}</i>
-          {% else %}
-            <img src="{{ config.theme.logo | url }}" width="55" height="55">
-          {% endif %}
-        </a>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
-      </div>
-      <div class="md-flex__cell md-flex__cell--stretch">
-        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          {% block site_name %}
-            <span class="md-header-nav__topic">
-              {{ config.site_name }}
-              {% if config.extra.versions %}
-              <span class="header-dropdown">
-                <a href="{{ config.extra.versions[config.extra.current_version] }}/{{ page.url }}">{{ config.extra.current_version }}</a>
-                <span class="pointer">
-                  <svg width="100%" height="100%" viewBox="0 0 24 24" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M18 9H6l6 6 6-6z" fill-rule="evenodd"></path></svg>
-                </span>
-                <span class="content">
-                  <ul>
-                    {% for key, value in config.extra.versions.items() %}
-                    <li> <a href="{{ value }}/{{ page.url }}">{{ key }}</a></li>
-                    {% endfor %}
-                  </ul>
-                </span>
-              </span>
-              {% endif %}
-            </span>
-            <span class="md-header-nav__topic">
-              {{ page.title }}
-              {% if config.extra.versions %}
-              <span class="header-dropdown">
-                <a href="{{ config.extra.versions[config.extra.current_version] }}/{{ page.url }}">{{ config.extra.current_version }}</a>
-                <span class="pointer">
-                  <svg width="100%" height="100%" viewBox="0 0 24 24" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M18 9H6l6 6 6-6z" fill-rule="evenodd"></path></svg>
-                </span>
-                <span class="content">
-                  <ul>
-                    {% for key, value in config.extra.versions.items() %}
-                    <li> <a href="{{ value }}/{{ page.url }}">{{ key }}</a></li>
-                    {% endfor %}
-                  </ul>
-                </span>
-              </span>
-              {% endif %}
-            </span>
-          {% endblock %}
+            <div class="sub">
+                <a href="https://pivotal.io/support" target="_blank">Support</a>
+                <a href="https://network.pivotal.io/" target="_blank">Downloads</a>
+                <a href="https://pivotal.io/contact" target="_blank">Contact Us</a>
+                <a href="https://login.run.pivotal.io/" target="_blank">Sign In</a>
+            </div>
         </div>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        {% block search_box %}
-          {% if "search" in config["plugins"] %}
-            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
-            {% include "partials/search.html" %}
-          {% endif %}
-        {% endblock %}
-      </div>
-      {% if config.repo_url %}
-        <div class="md-flex__cell md-flex__cell--shrink">
-          <div class="md-header-nav__source">
-            {% include "partials/source.html" %}
-          </div>
-        </div>
-      {% endif %}
     </div>
-  </nav>
+    <!-- Top-level navigation -->
+    <nav class="md-header-nav md-grid" aria-label="{{ lang.t('header.title') }}">
+
+        <!-- Link to home -->
+        <a
+                href="{{ config.site_url | default(nav.homepage.url, true) | url }}"
+                title="{{ config.site_name }}"
+                class="md-header-nav__button md-logo"
+                aria-label="{{ config.site_name }}"
+        >
+            {% include "partials/logo.html" %}
+        </a>
+
+        <!-- Button to open drawer -->
+        <label class="md-header-nav__button md-icon" for="__drawer">
+            {% include ".icons/material/menu" ~ ".svg" %}
+        </label>
+
+        <!-- Header title -->
+        <div class="md-header-nav__title" data-md-component="header-title">
+            {% if config.site_name == page.title %}
+            <div class="md-header-nav__ellipsis md-ellipsis">
+                {{ config.site_name }}
+                {% include "partials/_version_dropdown.html" %}
+            </div>
+            {% else %}
+            <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            {{ config.site_name }}
+            {% include "partials/_version_dropdown.html" %}
+          </span>
+                <span class="md-header-nav__topic md-ellipsis">
+            {% if page and page.meta and page.meta.title %}
+              {{ page.meta.title }}
+            {% else %}
+              {{ page.title }}
+            {% endif %}
+            {% include "partials/_version_dropdown.html" %}
+          </span>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Button to open search dialogue -->
+        {% if "search" in config["plugins"] %}
+        <label class="md-header-nav__button md-icon" for="__search">
+            {% include ".icons/material/magnify.svg" %}
+        </label>
+
+        <!-- Search interface -->
+        {% include "partials/search.html" %}
+        {% endif %}
+
+        <!-- Repository containing source -->
+        {% if config.repo_url %}
+        <div class="md-header-nav__source">
+            {% include "partials/source.html" %}
+        </div>
+        {% endif %}
+    </nav>
 </header>
