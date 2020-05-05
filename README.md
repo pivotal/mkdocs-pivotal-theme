@@ -62,12 +62,12 @@ Now that you're working from a clean state,
 comment out `git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal` 
 in the `requirements.txt` of your docs repo (not the `mkdocs-pivotal-theme`).
 
-Add `/Users/pivotal/workspace/mkdocs-pivotal-theme`
+Add `~/workspace/mkdocs-pivotal-theme`
 (or the path to where this repo is checked out)
 to the `requirements.txt` of your docs repo.
 Then `pip3 install -r requirements.txt`.
 
-Then, run `pip3 install --editable /Users/pivotal/workspace/mkdocs-pivotal-theme`
+Then, run `pip3 install --editable ~/workspace/mkdocs-pivotal-theme`
 to install a local, editable copy.
 Any changes to the theme will be automatically rendered in your `mkdocs` server,
 without having to restart the server or reinstall any packages.
