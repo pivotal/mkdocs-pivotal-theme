@@ -2,4 +2,3 @@ mkdocs>=1
 mkdocs-material~=5.1
 Pygments>=2.2
 pymdown-extensions~=7.1
-git+https://github.com/pivotal/mkdocs-plugins.git#egg=mkdocs-jinja2&subdirectory=mkdocs-jinja2@v0.0.0
