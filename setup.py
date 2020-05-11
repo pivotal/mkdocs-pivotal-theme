@@ -11,10 +11,10 @@ with open("requirements.txt") as data:
 # Package description
 setup(
     name = "mkdocs-pivotal",
-    version = "0.0.0",
+    version = "1.0.0",
     license = "MIT",
-    author = "JT Archie",
-    author_email = "jarchie@pivotal.io",
+    author = "JT Archie, Jesse Alford",
+    author_email = "jarchie@pivotal.io, jalford@pivotal.io",
     packages = find_packages(),
     include_package_data = True,
     install_requires = install_requires,
