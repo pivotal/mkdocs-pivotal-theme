@@ -117,21 +117,37 @@ class BuildDocs
         'current_version' => current_version
       } # NOTE: https://www.mkdocs.org/user-guide/custom-themes/#extra-context
       config['strict'] = true
-      if config.key?('plugins')
-        if index = config['plugins'].index { |v| v.key?('jinja2') }
-          if config['plugins'][index]['jinja2'].key?('dependent_sections')
-            config['plugins'][index]['jinja2']['dependent_sections'].each do |name, current_dir|
-              current_dir_name = File.basename(File.expand_path(current_dir))
-              dir = File.join(@docs_dir, "#{current_dir_name}-#{current_version}")
-              if Dir.exist?(dir)
-                config['plugins'][index]['jinja2']['dependent_sections'][name] = dir
-              end
-            end
-          end
+
+      modifier = proc do |current_dir|
+        current_dir_name = File.basename(File.expand_path(current_dir))
+        dir = File.join(@docs_dir, "#{current_dir_name}-#{current_version}")
+        if Dir.exist?(dir)
+          dir
+        else
+          current_dir
         end
       end
+      config['plugins'] = modify_in_place(config['plugins'], modifier)
+      config['markdown_extensions'] = modify_in_place(config['markdown_extensions'], modifier)
       File.write(config_path, config.to_yaml)
     end
+  end
+
+  def modify_in_place(obj, fn)
+    case obj
+    when Hash
+      obj.each do |key, value|
+        obj[key] = modify_in_place(value, fn)
+      end
+    when Array
+      obj.each_with_index do |value, index|
+        obj[index] = modify_in_place(value, fn)
+      end
+    when String
+      obj = fn.call(obj)
+    end
+
+    obj
   end
 end
 

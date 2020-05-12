@@ -16,7 +16,7 @@ RSpec.describe 'When generating a site' do
     path = File.join(build_dir, site_name)
     File.write(File.join(path, 'requirements.txt'), <<~EOL)
       mkdocs
-      mkdocs-material<5.0.0
+      mkdocs-material
       git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal
     EOL
     path
@@ -151,6 +151,16 @@ RSpec.describe 'When generating a site' do
               }
             }
           ]
+          config['markdown_extensions'] = [
+            {
+              'markdown-code-excerpt' => {
+                'sections' => {
+                  'task' => '../some-directory',
+                  'examples' => './docs/examples'
+                }
+              }
+            }
+          ]
           File.write(File.join(doc_path, 'mkdocs.yml'), config.to_yaml)
           File.write(
             File.join(doc_path, 'requirements.txt'),
@@ -171,6 +181,17 @@ RSpec.describe 'When generating a site' do
               }
             }
           )
+
+          expect(config['markdown_extensions'].first).to eq (
+              {
+                'markdown-code-excerpt' => {
+                  'sections' => {
+                    'task' => dependenct_section_dir,
+                    'examples' => './docs/examples'
+                  }
+                }
+              }
+            )
         end
       end
 
