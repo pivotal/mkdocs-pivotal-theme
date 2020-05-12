@@ -22,6 +22,7 @@ RUN apt-get install -y \
   golang-go \
   git \
   wget
+RUN pip3 install --upgrade pip
 RUN wget -O - https://github.com/BurntSushi/ripgrep/releases/download/12.0.1/ripgrep-12.0.1-x86_64-unknown-linux-musl.tar.gz | tar zxf - --strip-component=1
 RUN mv rg /usr/local/bin/
 ENV GOPATH /go
