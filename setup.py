@@ -11,7 +11,7 @@ with open("requirements.txt") as data:
 # Package description
 setup(
     name = "mkdocs-pivotal",
-    version = "1.1.0",
+    version = "1.1.1",
     license = "MIT",
     author = "JT Archie, Jesse Alford",
     author_email = "jarchie@pivotal.io, jalford@pivotal.io",
