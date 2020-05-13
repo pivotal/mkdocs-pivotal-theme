@@ -1,9 +1,56 @@
 <style>
+    /*
+        em calculations as of mkdocs-material 5.1.6:
+
+        mkdocs-material has a file with scss variables for screen breakpoints. (src/assets/stylesheets/_config.scss)
+        These have pixel values which are converted to em by the equation: px2em = (provided px / 16px) * 1em.
+
+        Here is the table for ease of comparison:
+        $break-devices: (
+          mobile: (
+            portrait:  px2em(220px)  px2em(479px),
+            landscape: px2em(480px)  px2em(719px)
+          ),
+          tablet: (
+            portrait:  px2em(720px)  px2em(959px),
+            landscape: px2em(960px)  px2em(1219px)
+          ),
+          screen: (
+            small:     px2em(1220px) px2em(1599px),
+            medium:    px2em(1600px) px2em(1999px),
+            large:     px2em(2000px)
+          )
+        );
+
+        The values for each line are the min-width and max-width respectively.
+
+        [tablet landscape +] would then translate to:
+        @media only screen and (min-width: 60em) and means any size greater than 60em
+        The min-width of "tablet landscape" is px2em(960px). (960px / 16px) * 1em = 60em.
+
+        min-width and max-width can be explained as follows:
+
+        @media only screen and (max-width: 600px)  {...}
+        "If less than or equal to 600px..."
+
+        @media only screen and (min-width: 600px)  {...}
+        "If greater than or equal to 600px..."
+    */
+
     [data-md-color-primary=teal] {
         --md-primary-fg-color: #314351;
         --md-primary-fg-color--dark: #314351;
         --md-accent-fg-color: #1D428A;
     }
+
+    /*
+       Set to a known pixel offset so we have a standardized location
+       when trying to align the h# elements on anchor scrolling.
+    */
+    .md-sidebar {
+        padding-top: 20px;
+    }
+
     .header-dropdown {
         font-size: .75em
     }
@@ -27,6 +74,8 @@
         color: #00253e;
     }
 
+    /* [tablet landscape -] See top for calculation of em */
+    /* Anything smaller than screen small min */
     @media only screen and (max-width: 60em) {
         .md-header .top-header {
             display: none
@@ -37,9 +86,10 @@
         }
     }
 
+    /* [tablet landscape +] See top for calculation of em */
+    /* Anything greater than screen small min */
     @media only screen and (min-width: 60em) {
         /* header release selectors */
-
         .md-header {
             height: 6.8rem
         }
@@ -134,11 +184,9 @@
         font-weight: 600;
     }
 
-    label.md-nav__title {
-        margin: 22px 0 0 0;
-    }
-
-    @media only screen and (min-width: 76.1875em) {
+    /* [screen small +] See top for calculation of em */
+    /* Anything greater than screen small min */
+    @media only screen and (min-width: 76.25em) {
         label.md-nav__title.md-nav__title--site {
             display: none
         }
@@ -207,12 +255,12 @@
         font-size: 16px
     }
 
-    .md-typeset table:not([class]) th{
+    .md-typeset table:not([class]) th {
         background-color: #F8F8F8;
         color: #00253e;
     }
 
-    .md-typeset table:not([class]) tr{
+    .md-typeset table:not([class]) tr {
         color: #727272;
     }
 
@@ -223,23 +271,52 @@
     .md-typeset .md-footer-social {
         font-size: .64rem
     }
-    
+
+    /*
+      The values for .md-typesets have been meticulously set so that when you follow
+      a link to an h# element anchor, the top of that h# element will line up with
+      the top of the sidebar headers defined by .md-sidebar.
+
+      This is relative from the top of the page. If set to 0, the h# elements
+      would show up below the headers. Since we have two headers that dynamically
+      are hidden based on screen width, we have to use media selectors to define
+      different offsets for the h# elements based on the current screen width.
+    */
+
+    /* Catch-all for anything greater than screen small min */
     .md-typeset [id]:target:before {
-        margin-top: -205px !important;
-        padding-top: 205px !important;
+        margin-top: -165px !important;
+        padding-top: 165px !important;
     }
 
-    @media only screen and (max-width: 125em) {
-        .md-typeset [id]:target:before {
-            margin-top: -188px !important;
-            padding-top: 188px !important;
-        }
-    }
-    
+    /* [screen medium -] See top for calculation of em */
+    /* Anything smaller than screen medium min */
+    /* A point where the base em seems to change. */
+    /* Text changes between 17.6px and 16px here, throwing off our calculations */
     @media only screen and (max-width: 100em) {
         .md-typeset [id]:target:before {
-            margin-top: -170px !important;
-            padding-top: 170px !important;
+            margin-top: -150px !important;
+            padding-top: 150px !important;
+        }
+    }
+
+    /* [tablet -] See top for calculation of em */
+    /* Anything smaller than tablet max */
+    /* Same point where the primary navigation is converted to a drawer */
+    @media only screen and (max-width: 76.25em) {
+        .md-typeset [id]:target:before {
+            margin-top: -150px !important;
+            padding-top: 150px !important;
+        }
+    }
+
+    /* [tablet landscape -] See top for calculation of em */
+    /* Anything smaller than tablet landscape min */
+    /* Same point where the table of contents is moved to the drawer */
+    @media only screen and (max-width: 60em) {
+        .md-typeset [id]:target:before {
+            margin-top: -63px !important;
+            padding-top: 63px !important;
         }
     }
 
