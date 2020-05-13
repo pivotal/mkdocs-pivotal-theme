@@ -283,10 +283,21 @@
       different offsets for the h# elements based on the current screen width.
     */
 
-    /* Catch-all for anything greater than screen small min */
+    /* Catch-all for anything greater than screen large min */
     .md-typeset [id]:target:before {
-        margin-top: -165px !important;
-        padding-top: 165px !important;
+        margin-top: -178px !important;
+        padding-top: 178px !important;
+    }
+
+    /* [screen large -] See top for calculation of em */
+    /* Anything smaller than screen large min */
+    /* A point where the base em seems to change. */
+    /* Text changes between 19.2 and 17.6px and here, throwing off our calculations */
+    @media only screen and (max-width: 100em) {
+        .md-typeset [id]:target:before {
+            margin-top: -165px !important;
+            padding-top: 165px !important;
+        }
     }
 
     /* [screen medium -] See top for calculation of em */
