@@ -28,14 +28,14 @@ fi
 
 if [ -z "$whitelist" ]; then
   echo -e '\033[1;32mrunning muffet without a whitelist...\033[0m'
-  muffet -t 30 "$url" -c 50
+  muffet -t 30 "$url" -c 5
   if [[ $? -ne 0 ]]; then
     echo -e '\033[1;31mmuffet returned with errors.\033[0m'
     exit_status=1
   fi
 else
   echo -e '\033[1;32mrunning muffet with a regex whitelist...\033[0m'
-  muffet -t 30 --exclude "$whitelist" "$url" -c 50
+  muffet -t 30 --exclude "$whitelist" "$url" -c 5
   if [[ $? -ne 0 ]]; then
     echo -e '\033[1;31mmuffet returned with errors!\033[0m'
     exit_status=1
@@ -56,7 +56,7 @@ pushd "$build_source"
     echo -e '\n\033[1;32mRunning a check for undefined reference-style links...\033[0m'
     brokenLinkLines=$(allHtmlLines | grep -e '\[.*\]\[.*\]')
 
-    if [ ! -z "$brokenLinkLines" ]; then
+    if [ -n "$brokenLinkLines" ]; then
       echo "$brokenLinkLines"
       echo -e '\033[1;31mGenerated HTML contains undefined links!\033[0m'
       exit_status=1
