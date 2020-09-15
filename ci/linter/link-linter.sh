@@ -61,6 +61,15 @@ pushd "$build_source"
       echo -e '\033[1;31mGenerated HTML contains undefined links!\033[0m'
       exit_status=1
     fi
+
+    echo -e '\n\033[1;32mRunning a check for undefined code blocks (```)...\033[0m'
+    brokenLinkLines=$(allHtmlLines | grep -e '```')
+
+    if [ -n "$brokenLinkLines" ]; then
+      echo "$brokenLinkLines"
+      echo -e '\033[1;31mGenerated HTML contains undefined code blocks!\033[0m'
+      exit_status=1
+    fi
 popd
 
 if [[ "$exit_status" -ne 0 ]]; then
