@@ -2,7 +2,7 @@
 
 build_source=$1
 url=$2
-whitelist=$3
+allow_list=$3
 
 exit_status=0
 
@@ -12,7 +12,7 @@ if [ -z "$build_source" ]; then
   echo -e 'To use, please provide:
    - a built mkdocs site,
    - a url where your docs site is running,
-   - an optional whitelist to exclude certain links from causing errors.'
+   - an optional allow_list to exclude certain links from causing errors.'
   echo 'Example: ./ci/linter/link-linter.sh docs-for-product http://127.0.0.1:8000 https://google.com'
   echo -e '\033[1;93mNOTE: Links defined by single brackets are not checked by this tool.
       Please use either [title][link] or [title](link) to guarantee the linter will check it.\033[0m'
@@ -26,16 +26,16 @@ if [ -z "$url" ]; then
   exit 1
 fi
 
-if [ -z "$whitelist" ]; then
-  echo -e '\033[1;32mrunning muffet without a whitelist...\033[0m'
-  muffet -t 30 "$url" -c 5
+if [ -z "$allow_list" ]; then
+  echo -e '\033[1;32mrunning muffet without a allow_list...\033[0m'
+  muffet --timeout 30 "$url" --concurrency 5 --buffer-size 10000
   if [[ $? -ne 0 ]]; then
     echo -e '\033[1;31mmuffet returned with errors.\033[0m'
     exit_status=1
   fi
 else
-  echo -e '\033[1;32mrunning muffet with a regex whitelist...\033[0m'
-  muffet -t 30 --exclude "$whitelist" "$url" -c 5
+  echo -e '\033[1;32mrunning muffet with a regex allow_list...\033[0m'
+  muffet --timeout 30 --exclude "$allow_list" "$url" --concurrency 5 --buffer-size 10000
   if [[ $? -ne 0 ]]; then
     echo -e '\033[1;31mmuffet returned with errors!\033[0m'
     exit_status=1
