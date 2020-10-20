@@ -28,14 +28,14 @@ fi
 
 if [ -z "$allow_list" ]; then
   echo -e '\033[1;32mrunning muffet without a allow_list...\033[0m'
-  muffet --timeout 30 "$url" --concurrency 5 --buffer-size 10000
+  muffet --timeout 30 --max-connections 5 --buffer-size 10000 "$url"
   if [[ $? -ne 0 ]]; then
     echo -e '\033[1;31mmuffet returned with errors.\033[0m'
     exit_status=1
   fi
 else
   echo -e '\033[1;32mrunning muffet with a regex allow_list...\033[0m'
-  muffet --timeout 30 --exclude "$allow_list" "$url" --concurrency 5 --buffer-size 10000
+  muffet --timeout 30 --max-connections 5 --buffer-size 10000 --exclude "$allow_list" "$url"
   if [[ $? -ne 0 ]]; then
     echo -e '\033[1;31mmuffet returned with errors!\033[0m'
     exit_status=1
