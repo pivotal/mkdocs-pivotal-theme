@@ -9,4 +9,4 @@ inputs:
   - name: mkdocs-pivotal-theme
 run:
   path: mkdocs-pivotal-theme/ci/linter/link-linter.sh
-  args: ["./site", "((site_url))", "((white_list))"]
+  args: ["./site", "((site_url))", "((allow_list))"]
