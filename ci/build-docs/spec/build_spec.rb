@@ -16,7 +16,7 @@ RSpec.describe 'When generating a site' do
     path = File.join(build_dir, site_name)
     File.write(File.join(path, 'requirements.txt'), <<~EOL)
       mkdocs
-      mkdocs-material
+      mkdocs-material~=5.1
       git+https://github.com/pivotal/mkdocs-pivotal-theme#egg=mkdocs-pivotal
     EOL
     path
