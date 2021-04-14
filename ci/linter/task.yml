@@ -2,7 +2,7 @@
 image_resource:
   type: docker-image
   source:
-    repository: internalpcfplatformautomation/docs
+    repository: ((docs_repository))
 platform: linux
 inputs:
   - name: site
