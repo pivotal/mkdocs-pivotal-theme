@@ -1,4 +1,5 @@
-FROM ubuntu:bionic
+ARG IMAGE=ubuntu:bionic
+FROM $IMAGE
 
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
