@@ -1,6 +1,6 @@
 mkdocs>=1
-mkdocs-material~=5.1
+mkdocs-material~=8.3
 Pygments>=2.2
-pymdown-extensions~=7.1
+pymdown-extensions~=9.4
 mkdocs-jinja2@git+https://github.com/pivotal/mkdocs-plugins.git@v1.0.0#egg=mkdocs-jinja2&subdirectory=mkdocs-jinja2
 markdown-code-excerpt@git+https://github.com/pivotal/mkdocs-plugins.git@v1.0.1#egg=markdown-code-excerpt&subdirectory=markdown-code-excerpt
