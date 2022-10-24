@@ -28,4 +28,4 @@ RUN wget -O - https://github.com/BurntSushi/ripgrep/releases/download/12.0.1/rip
 RUN mv rg /usr/local/bin/
 ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
-RUN GO111MODULE=on go get -u github.com/raviqqe/muffet/v2
+RUN go install github.com/raviqqe/muffet/v2@latest
