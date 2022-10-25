@@ -1,4 +1,4 @@
-ARG IMAGE=ubuntu:bionic
+ARG IMAGE=ubuntu:focal
 FROM $IMAGE
 
 ENV LC_ALL=C.UTF-8
