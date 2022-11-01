@@ -89,11 +89,6 @@
     /* [tablet landscape +] See top for calculation of em */
     /* Anything greater than screen small min */
     @media only screen and (min-width: 60em) {
-        /* header release selectors */
-        .md-header {
-            height: 6.8rem
-        }
-
         .md-header .md-header-nav {
             height: 4rem
         }
@@ -127,7 +122,7 @@
         }
 
         .md-header .top-header {
-            height: 2.8rem;
+            height: 2.3rem;
             background-color: #fff;
             line-height: 2.1rem
         }
@@ -147,10 +142,6 @@
 
         .md-header .top-header .sub a:hover {
             color: #1D428A;
-        }
-
-        .md-search, .md-header-nav__source {
-            margin-top: 16px;
         }
 
         .md-header[data-md-state=shadow] {
@@ -335,7 +326,7 @@
         padding: .4rem 0
     }
 
-    .md-footer-nav {
+    .md-footer {
         background-color: #314351;
         color: #fff;
     }
@@ -343,5 +334,16 @@
     .md-footer-meta {
         background-color: #314351;
         color: #fff;
+    }
+
+    .md-social {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .md-footer-meta__inner {
+        margin-bottom: 0.4rem;
     }
 </style>
